@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lair Neto - Buyer Manager | MADEL</title>
-    <!-- Biblioteca Oficial de Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
@@ -36,6 +35,7 @@
             position: relative;
         }
 
+        /* Seletor de Idioma */
         .lang-selector {
             display: flex;
             justify-content: flex-end;
@@ -60,6 +60,7 @@
             border-color: #e31c1c;
         }
 
+        /* Container Logomarca MADEL */
         .company-logo-container {
             margin-bottom: 24px;
             display: flex;
@@ -78,6 +79,7 @@
             display: block;
         }
 
+        /* Container da Foto de Perfil */
         .avatar-container {
             width: 90px;
             height: 90px;
@@ -123,6 +125,7 @@
             padding: 0 10px;
         }
 
+        /* Caixa de Informações */
         .company-info-box {
             background-color: #171717;
             border-radius: 8px;
@@ -137,7 +140,6 @@
             color: #a6a6a6;
             margin-bottom: 6px;
         }
-
         .info-item:last-child {
             margin-bottom: 0;
         }
@@ -168,17 +170,19 @@
             gap: 12px;
         }
 
+        /* Grid para canais compactos */
         .social-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
 
+        /* Botões */
         .btn-link {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px; /* Espaço entre o ícone e o texto */
+            gap: 10px;
             background-color: #262626;
             color: #ffffff;
             text-decoration: none;
@@ -214,11 +218,11 @@
             border-color: #ffffff;
         }
 
+        /* Botão WeChat */
         .btn-wechat {
             background-color: #07c160;
             border-color: #07c160;
         }
-
         .btn-wechat:hover {
             background-color: #ffffff;
             color: #07c160;
@@ -226,6 +230,7 @@
             box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
         }
 
+        /* Modais */
         .modal {
             display: none;
             position: fixed;
@@ -244,7 +249,7 @@
             background-color: #ffffff;
             padding: 24px;
             border-radius: 16px;
-            max-width: 320px;
+            max-width: 340px;
             width: 100%;
             text-align: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
@@ -265,16 +270,51 @@
             margin-top: 8px;
         }
 
+        /* Lista de CNPJs no Modal corporativo */
+        .cnpj-list {
+            text-align: left;
+            margin: 15px 0;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .cnpj-item {
+            background-color: #f7f7f7;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border-left: 3px solid #e31c1c;
+            transition: background-color 0.2s;
+        }
+
+        .cnpj-item:hover {
+            background-color: #eeeeee;
+        }
+
+        .cnpj-item span {
+            display: block;
+            font-size: 12px;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .cnpj-item small {
+            color: #666666;
+            font-size: 11px;
+        }
+
         .close-btn {
             background-color: #e31c1c;
             color: #ffffff;
             border: none;
             padding: 8px 16px;
             border-radius: 6px;
-            margin-top: 16px;
+            margin-top: 10px;
             cursor: pointer;
             font-weight: bold;
             font-size: 13px;
+            width: 100%;
         }
 
         .footer {
@@ -289,24 +329,20 @@
 
     <div class="card-container">
         
-        <!-- Seleção de Idiomas -->
         <div class="lang-selector">
             <button class="lang-btn active" onclick="switchLang('pt')">PT</button>
             <button class="lang-btn" onclick="switchLang('en')">EN</button>
             <button class="lang-btn" onclick="switchLang('zh')">中文</button>
         </div>
         
-        <!-- Logotipo Oficial MADEL local -->
         <div class="company-logo-container">
             <img src="logo-madel.png" alt="Logomarca MADEL" class="company-logo-img">
         </div>
 
-        <!-- Foto de Perfil do Lair -->
         <div class="avatar-container">
             <img src="foto-perfil.jpg" alt="Lair Neto" class="avatar-img">
         </div>
 
-        <!-- Informações Profissionais -->
         <h1 id="user-name">Lair Neto</h1>
         <div id="user-role" class="title-role">Gerente de Compras</div>
         
@@ -314,14 +350,23 @@
             Desenvolvimento de portfólio de produtos alto padrão e negociações estratégicas para redes de varejo.
         </p>
 
-        <!-- Dados Institucionais -->
         <div class="company-info-box">
             <div class="info-item"><strong id="lbl-company">Empresa:</strong> MADEL - Portas, Pisos e Painéis</div>
             <div class="info-item"><strong>Website:</strong> <a href="https://www.madel.com.br" target="_blank">www.madel.com.br</a></div>
             <div class="info-item"><strong id="lbl-coverage">Atendimento:</strong> <span id="val-coverage">Nacional e Internacional</span></div>
         </div>
 
-        <!-- CONEXÃO DIRETA -->
+        <div id="sec-corp" class="section-label">Corporativo & Documentações</div>
+        <div class="links-container">
+            <a id="btn-presentation" href="apresentação.pdf" target="_blank" class="btn-link btn-accent">
+                <i class="fa-solid fa-file-pdf"></i> Apresentação Institucional
+            </a>
+
+            <button id="btn-cnpj" onclick="openCnpjModal()" class="btn-link">
+                <i class="fa-solid fa-building-shield"></i> CNPJ Empresas do Grupo
+            </button>
+        </div>
+
         <div id="sec-direct" class="section-label">Contatos Diretos</div>
         <div class="links-container">
             <a id="btn-wa" href="https://wa.me/5511950303470" target="_blank" class="btn-link">
@@ -335,21 +380,15 @@
             <a id="btn-mail-personal" href="mailto:lairjoneto@gmail.com" class="btn-link">
                 <i class="fa-solid fa-envelope"></i> E-mail Pessoal
             </a>
-
-            <a id="btn-vcard" href="seu-link-vcard.vcf" class="btn-link btn-accent">
-                <i class="fa-solid fa-address-book"></i> Salvar Contato
-            </a>
         </div>
 
-        <!-- NEGÓCIOS INTERNACIONAIS -->
-        <div id="sec-intl" class="section-label">Buyer Manager</div>
+        <div id="sec-intl" class="section-label">International Procurement</div>
         <div class="links-container">
             <button id="btn-wechat" onclick="openModal()" class="btn-link btn-wechat">
                 <i class="fa-brands fa-weixin"></i> WeChat ID: LairNeto_BrasilSP
             </button>
         </div>
 
-        <!-- SEU PERFIL -->
         <div id="sec-my-socials" class="section-label">Meus Canais</div>
         <div class="social-grid">
             <a href="https://linkedin.com/in/lairneto" target="_blank" class="btn-link" id="btn-my-in">
@@ -369,7 +408,6 @@
             </a>
         </div>
 
-        <!-- INSTITUCIONAL MADEL -->
         <div id="sec-madel-socials" class="section-label">Canais MADEL</div>
         <div class="social-grid">
             <a href="https://instagram.com/madelmadeiras" target="_blank" class="btn-link" id="btn-md-ig">
@@ -389,14 +427,6 @@
             </a>
         </div>
 
-        <!-- SITE MADEL -->
-        <div id="sec-partners" class="section-label">Parcerias & Cadastros</div>
-        <div class="links-container" style="margin-top: 12px;">
-            <a id="btn-supplier" href="https://www.madel.com.br/cadastro-fornecedores" target="_blank" class="btn-link">
-                <i class="fa-solid fa-handshake"></i> Seja um Fornecedor (Cadastro)
-            </a>
-        </div>
-
         <div class="footer">
             &copy; 2026 MADEL & LAIR NETO
         </div>
@@ -410,6 +440,65 @@
         </div>
     </div>
 
+    <div id="cnpj-modal" class="modal" onclick="closeCnpjModalOutside(event)">
+        <div class="modal-content" style="max-width: 380px;">
+            <h3 style="color: #333333; font-size: 16px; margin-bottom: 5px;"><i class="fa-solid fa-building"></i> CNPJ das Empresas do Grupo</h3>
+            <p style="color: #666; font-size: 12px; font-weight: normal; margin-bottom: 10px;">Clique na empresa para visualizar o cartão de CNPJ.</p>
+            
+            <div class="cnpj-list">
+                <a href="madelmatriz.pdf" target="_blank" style="text-decoration: none;">
+                    <div class="cnpj-item">
+                        <span>MADEL COMÉRCIO DE MADEIRAS (Matriz)</span>
+                        <small>CNPJ: 57.314.288/0001-96</small>
+                    </div>
+                </a>
+                <a href="madelitajai.pdf" target="_blank" style="text-decoration: none;">
+                    <div class="cnpj-item" style="border-left: 3px solid #07c160;">
+                        <span>MADEL COMÉRCIO DE MADEIRAS (Itajaí)</span>
+                        <small>CNPJ: 57.314.288/0016-72</small>
+                    </div>
+                </a>
+                <a href="bless.pdf" target="_blank" style="text-decoration: none;">
+                    <div class="cnpj-item">
+                        <span>BLESS MADEIRAS E FERRAGENS LTDA</span>
+                        <small>CNPJ: 63.669.589/0001-35</small>
+                    </div>
+                </a>
+                <a href="junia.pdf" target="_blank" style="text-decoration: none;">
+                    <div class="cnpj-item">
+                        <span>JUNIA COMÉRCIO DE MADEIRAS E FERRAGENS LTDA</span>
+                        <small>CNPJ: 10.554.800/0001-08</small>
+                    </div>
+                </a>
+                <a href="kaline.pdf" target="_blank" style="text-decoration: none;">
+                    <div class="cnpj-item">
+                        <span>KALINE COMÉRCIO DE MADEIRAS E FERRAGENS LTDA</span>
+                        <small>CNPJ: 09.121.917/0001-19</small>
+                    </div>
+                </a>
+                <a href="leilamad.pdf" target="_blank" style="text-decoration: none;">
+                    <div class="cnpj-item">
+                        <span>LEILAMAD PORTAS E JANELAS LTDA</span>
+                        <small>CNPJ: 03.170.663/0001-42</small>
+                    </div>
+                </a>
+                <a href="mistol.pdf" target="_blank" style="text-decoration: none;">
+                    <div class="cnpj-item">
+                        <span>MISTOL COMÉRCIO DE MADEIRAS E FERRAGENS LTDA</span>
+                        <small>CNPJ: 10.718.794/0001-87</small>
+                    </div>
+                </a>
+                <a href="molina.pdf" target="_blank" style="text-decoration: none;">
+                    <div class="cnpj-item">
+                        <span>MOLINA COMÉRCIO DE MADEIRAS E FERRAGENS LTDA</span>
+                        <small>CNPJ: 10.899.043/0001-04</small>
+                    </div>
+                </a>
+            </div>
+            <button class="close-btn" onclick="closeCnpjModal()">Fechar / Close</button>
+        </div>
+    </div>
+
     <script>
         const translations = {
             pt: {
@@ -418,15 +507,16 @@
                 company: "Empresa:",
                 coverage: "Atendimento:",
                 coverageVal: "Nacional e Internacional",
+                secCorp: "Corporativo & Documentações",
                 secDirect: "Contatos Diretos",
                 secIntl: "International Procurement",
                 secMySocials: "Meus Canais",
                 secMadelSocials: "Canais MADEL",
-                secPartners: "Parcerias & Cadastros",
+                btnPresentation: "<i class='fa-solid fa-file-pdf'></i> Apresentação Institucional",
+                btnCnpj: "<i class='fa-solid fa-building-shield'></i> CNPJ Empresas do Grupo",
                 btnWa: "<i class='fa-brands fa-whatsapp'></i> WhatsApp",
                 btnMail: "<i class='fa-solid fa-envelope-open-text'></i> E-mail Corporativo",
                 btnMailPers: "<i class='fa-solid fa-envelope'></i> E-mail Pessoal",
-                btnVcard: "<i class='fa-solid fa-address-book'></i> Salvar Contato",
                 btnWechat: "<i class='fa-brands fa-weixin'></i> WeChat ID: LairNeto_BrasilSP",
                 btnMyIn: "<i class='fa-brands fa-linkedin'></i> LinkedIn",
                 btnMyIg: "<i class='fa-brands fa-instagram'></i> Instagram",
@@ -437,8 +527,7 @@
                 btnMdTk: "<i class='fa-brands fa-tiktok'></i> TikTok",
                 btnMdYt: "<i class='fa-brands fa-youtube'></i> YouTube",
                 btnMdFb: "<i class='fa-brands fa-facebook'></i> Facebook",
-                btnMdIn: "<i class='fa-brands fa-linkedin'></i> LinkedIn Corporativo",
-                btnSupplier: "<i class='fa-solid fa-handshake'></i> Seja um Fornecedor (Cadastro)"
+                btnMdIn: "<i class='fa-brands fa-linkedin'></i> LinkedIn Corporativo"
             },
             en: {
                 role: "Buyer Manager",
@@ -446,15 +535,16 @@
                 company: "Company:",
                 coverage: "Coverage:",
                 coverageVal: "National and International",
+                secCorp: "Corporate & Documents",
                 secDirect: "Direct Contact",
                 secIntl: "International Procurement",
                 secMySocials: "My Channels",
                 secMadelSocials: "MADEL Channels",
-                secPartners: "Partnerships & Onboarding",
+                btnPresentation: "<i class='fa-solid fa-file-pdf'></i> Corporate Presentation",
+                btnCnpj: "<i class='fa-solid fa-building-shield'></i> Group Corporate IDs (CNPJ)",
                 btnWa: "<i class='fa-brands fa-whatsapp'></i> WhatsApp",
                 btnMail: "<i class='fa-solid fa-envelope-open-text'></i> Corporate Email",
                 btnMailPers: "<i class='fa-solid fa-envelope'></i> Personal Email",
-                btnVcard: "<i class='fa-solid fa-address-book'></i> Save to Contacts",
                 btnWechat: "<i class='fa-brands fa-weixin'></i> WeChat ID: LairNeto_BrasilSP",
                 btnMyIn: "<i class='fa-brands fa-linkedin'></i> LinkedIn",
                 btnMyIg: "<i class='fa-brands fa-instagram'></i> Instagram",
@@ -465,8 +555,7 @@
                 btnMdTk: "<i class='fa-brands fa-tiktok'></i> TikTok",
                 btnMdYt: "<i class='fa-brands fa-youtube'></i> YouTube",
                 btnMdFb: "<i class='fa-brands fa-facebook'></i> Facebook",
-                btnMdIn: "<i class='fa-brands fa-linkedin'></i> Corporate LinkedIn",
-                btnSupplier: "<i class='fa-solid fa-handshake'></i> Become a Supplier"
+                btnMdIn: "<i class='fa-brands fa-linkedin'></i> Corporate LinkedIn"
             },
             zh: {
                 role: "采购经理 (Buyer Manager)",
@@ -474,15 +563,16 @@
                 company: "公司:",
                 coverage: "服务范围:",
                 coverageVal: "国内与国际市场",
+                secCorp: "公司业务与核心档案",
                 secDirect: "直接联系方式",
                 secIntl: "国际采购与亚洲市场",
                 secMySocials: "个人社交媒体",
                 secMadelSocials: "MADEL 官方频道",
-                secPartners: "合作伙伴与供应商登记",
+                btnPresentation: "<i class='fa-solid fa-file-pdf'></i> 集团官方简报 (PDF)",
+                btnCnpj: "<i class='fa-solid fa-building-shield'></i> 集团企业注册号 (CNPJ)",
                 btnWa: "<i class='fa-brands fa-whatsapp'></i> WhatsApp 联系",
                 btnMail: "<i class='fa-solid fa-envelope-open-text'></i> 发送企业电子邮箱",
                 btnMailPers: "<i class='fa-solid fa-envelope'></i> 个人电子邮箱",
-                btnVcard: "<i class='fa-solid fa-address-book'></i> 保存到通讯录",
                 btnWechat: "<i class='fa-brands fa-weixin'></i> 微信号: LairNeto_BrasilSP",
                 btnMyIn: "<i class='fa-brands fa-linkedin'></i> 个人领英",
                 btnMyIg: "<i class='fa-brands fa-instagram'></i> 个人 Instagram",
@@ -493,8 +583,7 @@
                 btnMdTk: "<i class='fa-brands fa-tiktok'></i> MADEL 官方抖音",
                 btnMdYt: "<i class='fa-brands fa-youtube'></i> MADEL 官方视频",
                 btnMdFb: "<i class='fa-brands fa-facebook'></i> MADEL 官方脸书",
-                btnMdIn: "<i class='fa-brands fa-linkedin'></i> MADEL 企业领英",
-                btnSupplier: "<i class='fa-solid fa-handshake'></i> 成为供应商 (登记)"
+                btnMdIn: "<i class='fa-brands fa-linkedin'></i> MADEL 企业领英"
             }
         };
 
@@ -507,17 +596,17 @@
             document.getElementById('lbl-company').innerText = translations[lang].company;
             document.getElementById('lbl-coverage').innerText = translations[lang].coverage;
             document.getElementById('val-coverage').innerText = translations[lang].coverageVal;
+            document.getElementById('sec-corp').innerText = translations[lang].secCorp;
             document.getElementById('sec-direct').innerText = translations[lang].secDirect;
             document.getElementById('sec-intl').innerText = translations[lang].secIntl;
             document.getElementById('sec-my-socials').innerText = translations[lang].secMySocials;
             document.getElementById('sec-madel-socials').innerText = translations[lang].secMadelSocials;
-            document.getElementById('sec-partners').innerText = translations[lang].secPartners;
             
-            // Renderização das traduções com os novos ícones mantidos
+            document.getElementById('btn-presentation').innerHTML = translations[lang].btnPresentation;
+            document.getElementById('btn-cnpj').innerHTML = translations[lang].btnCnpj;
             document.getElementById('btn-wa').innerHTML = translations[lang].btnWa;
             document.getElementById('btn-mail').innerHTML = translations[lang].btnMail;
             document.getElementById('btn-mail-personal').innerHTML = translations[lang].btnMailPers;
-            document.getElementById('btn-vcard').innerHTML = translations[lang].btnVcard;
             document.getElementById('btn-wechat').innerHTML = translations[lang].btnWechat;
             document.getElementById('btn-my-in').innerHTML = translations[lang].btnMyIn;
             document.getElementById('btn-my-ig').innerHTML = translations[lang].btnMyIg;
@@ -529,20 +618,17 @@
             document.getElementById('btn-md-yt').innerHTML = translations[lang].btnMdYt;
             document.getElementById('btn-md-fb').innerHTML = translations[lang].btnMdFb;
             document.getElementById('btn-md-in').innerHTML = translations[lang].btnMdIn;
-            document.getElementById('btn-supplier').innerHTML = translations[lang].btnSupplier;
         }
 
-        function openModal() {
-            document.getElementById('qr-modal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('qr-modal').style.display = 'none';
-        }
-        function closeModalOutside(e) {
-            if (e.target.id === 'qr-modal') {
-                closeModal();
-            }
-        }
+        /* Modal WeChat */
+        function openModal() { document.getElementById('qr-modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('qr-modal').style.display = 'none'; }
+        function closeModalOutside(e) { if (e.target.id === 'qr-modal') closeModal(); }
+
+        /* Modal CNPJ do Grupo */
+        function openCnpjModal() { document.getElementById('cnpj-modal').style.display = 'flex'; }
+        function closeCnpjModal() { document.getElementById('cnpj-modal').style.display = 'none'; }
+        function closeCnpjModalOutside(e) { if (e.target.id === 'cnpj-modal') closeCnpjModal(); }
     </script>
 </body>
 </html>
